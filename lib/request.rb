@@ -1,9 +1,11 @@
 class Request
   
-  attr_reader :method, :resource
+  attr_reader :method, :resource, :version, :headers
 
   def initialize(request_string)
-    @method = :get
-    @resource = "/"
+    rows = request_string.split("\n")
+    first_row, *header = rows
+    @method, @resource, @version = first_row.split(" ")
+    @headers = {'Host' => 'developer.mozilla.org'}
   end
 end
