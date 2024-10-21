@@ -26,7 +26,7 @@ describe 'Request' do
         it 'parses the headers' do
             request_string = File.read('./test/example_requests/get-index.request.txt')
             request = Request.new(request_string)
-            headers =  {'Host' => 'developer.mozilla.org'}
+            headers =  {'Host' => 'developer.mozilla.org', 'Accept-Language' => 'fr'}
             _(request.headers).must_equal headers
         end
     end
