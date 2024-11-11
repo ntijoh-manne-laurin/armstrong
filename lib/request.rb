@@ -4,22 +4,25 @@ class Request
 	
 	attr_reader :method, :resource, :version, :headers, :params
 
-	def find_params
+	def find_params(params)
 		if @method == 'GET'
 			_, param_string = @resource.split('?')
-			if param_string == nil
-				return nil
-			else
-				param_string.split('&').map{|set| set.split('=')}.to_h
-			end
+		elsif @method == 'POST'
+			param_string = params
+		end
+		if param_string == nil
+			return nil
+		else
+			param_string.split('&').map{|set| set.split('=')}.to_h
 		end
 	end
 
 	def initialize(request_string)
-		rows = request_string.split("\n")
+		_, params = request_string.split("\n\n")
+		rows = _.split("\n")
 		first_row, *rest = rows
 		@method, @resource, @version = first_row.split(" ")
 		@headers = rest.map{|e| e.split(": ", 2)}.to_h
-		@params = find_params
+		@params = find_params(params)
 	end
 end
