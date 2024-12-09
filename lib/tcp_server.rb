@@ -31,19 +31,22 @@ class HTTPServer
 
           request = Request.new(data)
           
-          html = router.match_route(request)
-          if html != nil
+          content = router.match_route(request)
+          if content != nil
             status  = 200
-          elsif File.exist?("/public/#{request.resource}") #Sen kolla om resursen (filen finns)
+            content_type = "text/html"
+          elsif File.exist?("/public#{request.resource}") #Sen kolla om resursen (filen finns)
+            status = 200
             #vad är det för typ av fil
-            
+            content_type = get_mime_from_file_name(request.resource)
+            content = File.read("/public#{request.resource}")
           else
             #404
-            html = 'not found'
+            content = 'not found'
             status = 404
           end
 
-          response = Response.new(status, html, session)
+          response = Response.new(status, content, session, content_type)
           response.send
           #session.print response.to_s
           #session.close

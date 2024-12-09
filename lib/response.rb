@@ -1,13 +1,11 @@
 class Response
-  attr_reader :status, :body, :session
+  attr_reader :status, :body, :session, :content_type
 
-  def initialize(status, body, session)
+  def initialize(status, body, session, content_type)
     @status = status
     @body = body
     @session = session
-  end
-  def to_s
-    return "HTTP/1.1 #{@status}\r\nContent-length: #{@body.length}\r\nContent-Type: text/html\r\n\r\n#{@body}"
+    @content_type = content_type
   end
 
   def send
