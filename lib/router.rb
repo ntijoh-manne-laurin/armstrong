@@ -14,9 +14,12 @@ class Router
   end
 
   def match_route(request)
-    p @routes
     route = @routes.find {|route| (route[:method] == request.method && route[:resource] == request.resource)}
-    route[:block].call
+    if route == nil
+      return nil
+    else
+      route[:block].call
+    end
   end
 end
 
