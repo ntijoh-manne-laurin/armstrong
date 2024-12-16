@@ -7,17 +7,23 @@ class Router
 # GET /grillkorv/3
 
   def add_route(method, resource, &block)
-    p method
-    p resource
-    p block
     @routes += [{method: method, resource: resource, block: block}]
   end
 
   def match_route(request)
+    @routes.each do |route|
+      if route[:resource].include?(":")
+        resource = route[:resource].split("/")
+        resource.each {|p| p.include?(":") params << p}
+      end
+    end
+
     route = @routes.find {|route| (route[:method] == request.method && route[:resource] == request.resource)}
     if route == nil
       return nil
     else
+      require 'debug'
+      binding.break
       route[:block].call
     end
   end

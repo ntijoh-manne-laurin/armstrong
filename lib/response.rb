@@ -11,7 +11,7 @@ class Response
   def send
     @session.print "HTTP/1.1 #{@status}\r\n"
     @session.print "Content-length: #{@body.length}\r\n"
-    @session.print "Content-Type: text/html\r\n\r\n#{@body}"
+    @session.print "Content-Type: #{@content_type}\r\n\r\n#{@body}"
     @session.close
   end
 
