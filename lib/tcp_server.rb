@@ -18,6 +18,10 @@ class HTTPServer
           "<h1> Hello, #{id} </h1>
           <img src='/pikachu.png'>"
         end
+        router.add_route("GET","/banan") do
+          "<h1> Hello, banan </h1>
+          <img src='/pikachu.png'>"
+        end
         
 
         while session = server.accept

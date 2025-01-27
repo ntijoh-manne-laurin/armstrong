@@ -9,53 +9,20 @@ class Router
 # GET /grillkorv/3
 
   def add_route(method, resource, &block)
+    resource = Regexp.new(resource.gsub(/:\w+/, '(\w+)'))
+
     @routes += [{method: method, resource: resource, block: block}]
   end
 
   def match_route(request)
-    @routes.each do |route|
-      if route[:resource].include?(":")
-        params = []
-        resource = route[:resource].split("/")
-        resource.each do |param| 
-          if param.include?(":") 
-            binding.break
-            params << param
-          end
-        end
+    matched_route = @routes.find {|route| route[:method] == request.method && route[:resource].match?(request.resource)}
 
-        resource_string = ""
-        route[:resource].each do |element|
-          if element == ":"
-            break
-          end
-          resource_string << element
-        end
-
-        i = 0
-        while route[:resource][i] != ":"
-          if route[:resource][i] == request[i]
-        end
-
-        if route[:method] == request.method
-          route = route
-          break
-        end
-
-      else
-        if route[:method] == request.method && route[:resource] == request.resource
-          route = route
-          break
-        end
-      end
-    end
-
-    if route == nil
+    if matched_route == nil
       return nil
     else
-      require 'debug'
-      binding.break
-      route[:block].call(params)
+      match = matched_route[:resource].match(request.resource)
+  
+      matched_route[:block].call(*match.captures)
     end
   end
 end
