@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 
-# Beskrivande kommentar
+# En klass för att hantera requests på ett mer effektivt sätt.
 class Request
   attr_reader :method, :resource, :version, :headers, :params
 
@@ -17,6 +17,9 @@ class Request
     param_string.split('&').map { |set| set.split('=') }.to_h
   end
 
+  # Sorterar mottagen data och skapar ett nytt request-objekt.
+  #
+  # @param request_string [String] Den mottagna datan.
   def initialize(request_string)
     body, params = request_string.split("\n\n")
     rows = body.split("\n")

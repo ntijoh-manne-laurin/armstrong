@@ -22,7 +22,13 @@ class HTTPServer
           "<h1> Hello, banan </h1>
           <img src='/pikachu.png'>"
         end
-        
+        router.add_route("GET","/plus-fem/:num") do |num|
+          result = num.to_f + 5
+          "<h1>5 + #{num} = #{result}"
+        end
+        router.add_route("GET","/addera/:num1/:num2") do |num1, num2|
+          "<h1>#{num1} + #{num2} = #{num1.to_i + num2.to_i}"
+        end
 
         while session = server.accept
           data = ""
@@ -48,15 +54,12 @@ class HTTPServer
             path = "public#{request.resource}"
             content = File.open(path, 'rb') {|file| file.read}
           else
-            #404
-            content = 'not found'
             status = 404
+            content = 'not found'
           end
 
           response = Response.new(status, content, session, content_type)
           response.send
-          #session.print response.to_s
-          #session.close
         end
     end
 end

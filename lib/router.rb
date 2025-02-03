@@ -1,19 +1,25 @@
 require 'debug'
 
+# En klass som hanterar routes och matchning med requests.
 class Router
   def initialize
     @routes = [] # [{method: "get", resource: "/banan", block: "..."}, {}]
   end
 
-# GET /grillkorv
-# GET /grillkorv/3
-
+  # Sparar en route som ska användas av programmet senare.
+  # 
+  # @param method [String] Routens metod, "GET" eller "POST" etc.
+  # @param resource [String] Routen som ska användas, använder regex för dynamiska routes.
+  # @param block [String] Koden som routen ska returna, den html som ska skickas.
   def add_route(method, resource, &block)
     resource = Regexp.new(resource.gsub(/:\w+/, '(\w+)'))
 
     @routes += [{method: method, resource: resource, block: block}]
   end
 
+  # Matchar en sparad route till en mottagen request, sedan körs blocket i routen.
+  # 
+  # @param request [Request] Den mottagna requesten.
   def match_route(request)
     matched_route = @routes.find {|route| route[:method] == request.method && route[:resource].match?(request.resource)}
 
@@ -26,10 +32,3 @@ class Router
     end
   end
 end
-
-
-
-
-# add_route("/banan/") do 
-#   return "<h1>Welcome</h1>"
-# end

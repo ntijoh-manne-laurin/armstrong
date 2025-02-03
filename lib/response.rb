@@ -8,6 +8,7 @@ class Response
     @content_type = content_type
   end
 
+  # Skickar datan till webbläsaren.
   def send
     @session.print "HTTP/1.1 #{@status}\r\n"
     @session.print "Content-length: #{@body.length}\r\n"
