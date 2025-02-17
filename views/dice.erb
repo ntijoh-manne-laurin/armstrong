@@ -1,0 +1,12 @@
+<%list = []%>
+<%for i in 1..@num do%>
+    <%result = rand(1..6)%>
+    <%list << result%>
+<%end%>
+<%sum = 0%>
+<%list.each {|n| sum += n}%>
+<h1>Sum: <%=sum%></h1>
+<h1>Average: <%=sum/(list.length).to_f%></h1>
+<%for i in 0..(list.length-1) do%>
+    <h2>Dice <%=i+1%>: <%=list[i]%></h2>
+<%end%>

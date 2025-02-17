@@ -83,7 +83,7 @@ MIME_TYPES = {
 # Matchar en filtyp till en mime-type som den ska skickas med.
 # 
 # @param file_name [String] Filens namn.
-# @reuturn [String] Den mime-type som ska användas i content-type när det skickas.
+# @return [String] Den mime-type som ska användas i content-type när det skickas.
 def get_mime_from_file_name(file_name)
   name, extension = file_name.split('.')
   MIME_TYPES[extension]
