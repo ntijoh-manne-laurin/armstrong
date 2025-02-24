@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 
 
-# En klass för att hantera requests på ett mer effektivt sätt.
+# En klass för att hantera requests på ett effektivt sätt.
 class Request
   attr_reader :method, :resource, :version, :headers, :params
 
+  # Hittar och sparar params från en request, för både get och post-requests
+  # 
+  # @param params [String] Om det är en post-request skickas params via denna, annars finns dem i '@resource'
+  # @return params [Hash] paramsen sorterade i en Hash.
   def find_params(params)
     if @method == 'GET'
       _, param_string = @resource.split('?')
@@ -14,7 +18,7 @@ class Request
     return nil if param_string.nil?
 
 
-    param_string.split('&').map { |set| set.split('=') }.to_h
+    params = param_string.split('&').map { |set| set.split('=') }.to_h
   end
 
   # Sorterar mottagen data och skapar ett nytt request-objekt.
