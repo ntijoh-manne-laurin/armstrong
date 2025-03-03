@@ -3,8 +3,10 @@ require_relative 'request'
 require_relative 'response'
 require_relative 'mime_types'
 
+
 class HTTPServer
 
+    # Initierar ett objekt av HTTPServer-klassen
     def initialize(port)
         @port = port
     end

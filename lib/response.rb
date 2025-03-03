@@ -1,3 +1,4 @@
+# En klass för att hantera svar till webbläsaren
 class Response
   attr_reader :status, :body, :session, :content_type
 

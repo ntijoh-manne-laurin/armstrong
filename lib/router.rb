@@ -2,6 +2,8 @@ require 'debug'
 
 # En klass som hanterar routes och matchning med requests.
 class Router
+
+  # Skapar en ny router
   def initialize
     @routes = [] # [{method: "get", resource: "/banan", block: "..."}, {}]
   end
